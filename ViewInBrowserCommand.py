@@ -178,6 +178,10 @@ class ViewInBrowserCommand(sublime_plugin.TextCommand):
 		return result
 
 	def loadProjectSettings(self, view):
+		# print 'typeof ....', typeof(view.settings().get("sublime-view-in-browser"))
+		print("load project settings .......................... ")
+		print("maybe this function is called only when sublime is started")
+		print(view.settings().get("sublime-view-in-browser"))
 		return view.settings().get("sublime-view-in-browser")
 
 	def normalizePath(self, fileToOpen):
@@ -200,6 +204,7 @@ class ViewInBrowserCommand(sublime_plugin.TextCommand):
 		#
 		pluginSettings = self.loadPluginSettings(browser)
 		projectSettings = self.loadProjectSettings(self.view)
+		print("project settings ...... ")
 
 		fileToOpen = self.view.file_name()
 
