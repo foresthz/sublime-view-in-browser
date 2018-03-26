@@ -158,7 +158,7 @@ class ViewInBrowserCommand(sublime_plugin.TextCommand):
 		#
 		# Load default/user settings. The browser choice may
 		# be overridden by custom commands.
-		#
+		# 加载配置
 		settings = sublime.load_settings("View In Browser.sublime-settings")
 
 		if not defaultBrowser:
@@ -172,7 +172,11 @@ class ViewInBrowserCommand(sublime_plugin.TextCommand):
 		osName = self.getOsName()
 		platform = self.getPlatform()
 
+		print ('settings....... ')
 		selectedOs = settings.get(osName)
+		print ('osName...: '+osName)
+		# 配置文件,在哪里?
+		print(selectedOs)
 		result["baseCommand"] = self.getBaseCommand(selectedOs[platform][result["browser"]], osName)
 
 		return result
@@ -186,6 +190,7 @@ class ViewInBrowserCommand(sublime_plugin.TextCommand):
 
 	def normalizePath(self, fileToOpen):
 		fileToOpen = fileToOpen.replace("\\", "/")
+		print ('fileToOpen: ' + fileToOpen)
 		fileToOpen = "file:///%s" % fileToOpen.replace(" ", "%20").replace("(", "%28").replace(")", "%29")
 
 		return fileToOpen
@@ -204,7 +209,7 @@ class ViewInBrowserCommand(sublime_plugin.TextCommand):
 		#
 		pluginSettings = self.loadPluginSettings(browser)
 		projectSettings = self.loadProjectSettings(self.view)
-		print("project settings ...... ")
+		print("project settings...... ")
 
 		fileToOpen = self.view.file_name()
 
@@ -239,7 +244,7 @@ class ViewInBrowserCommand(sublime_plugin.TextCommand):
 		if pluginSettings["baseCommand"]:
 			command = "%s %s" % (pluginSettings["baseCommand"], fileToOpen.decode().encode(sys.getfilesystemencoding()) if self._pythonVersion < 3 else fileToOpen,)
 
-			print(command)
+			print('command: ' + command)
 			self.openBrowser(command, self.getOsName())
 
 		else:
